@@ -96,3 +96,16 @@ from sklearn.svm import SVC
 # selector = SelectKBest(score_func=f_classif, k=6)
 # selector.fit(x, y)
 # print(selector.get_feature_names_out())
+
+
+data = pd.read_csv("regression.csv")
+print(data.head())
+y = data['x'].values
+x = data.drop('x', axis=1).values
+x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=1, test_size=0.15)
+scaler = StandardScaler()
+x_train = scaler.fit_transform(x_train)
+x_test = scaler.fit_transform(x_test)
+my_model = Lasso()
+my_model.fit(x_train, y_train)
+print(my_model.score(x_test, y_test))
